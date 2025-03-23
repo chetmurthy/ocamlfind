@@ -44,7 +44,7 @@ jobs:
 
       - name: Install it with opam
         run: |
-          opam install -v --strict ocamlfind
+          opam install -v ocamlfind
 
       - name: Archive test results
         if: always()
