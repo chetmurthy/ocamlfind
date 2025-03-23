@@ -265,7 +265,7 @@ esac
 # check for presence of /bin/sh
 
 case "$system" in
-    mingw|mingw64|win32|win64|cygwin) sh="sh" ;;
+    mingw|mingw64|win32|win64|cygwin) sh="bash" ;;
     *)
     if [ ! -f /bin/sh ]; then
         sh="sh"
