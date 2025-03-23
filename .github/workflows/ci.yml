@@ -42,12 +42,26 @@ jobs:
           opam install . --deps-only --with-doc --with-test
           opam pin add ocamlfind . --no-action
 
-      - name: Build it with make
+      - name: Configure
         run: |
-          opam exec -- ./configure
+          opam exec -- bash ./configure
+        shell: bash
+
+      - name: Show Makefile.config
+        run: |
+          cat Makefile.config
+        shell: bash
+
+      - name: make all
+        run: |
           opam exec -- make all
+        shell: bash
+
+      - name: make opt
+        run: |
           opam exec -- make opt
+        shell: bash
 
       - name: Install it with opam
         run: |
-          opam install --strict ocamlfind
+          opam install -v ocamlfind
