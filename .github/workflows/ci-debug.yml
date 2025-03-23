@@ -47,6 +47,11 @@ jobs:
           opam exec -- bash ./configure
         shell: bash
 
+      - name: Show Makefile.config
+        run: |
+          cat Makefile.config
+        shell: bash
+
       - name: make all
         run: |
           opam exec -- make all
