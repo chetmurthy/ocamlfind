@@ -57,16 +57,16 @@ findlib-template: findlib.conf.in
 	cat findlib.conf.in | \
 	    $(SH) tools/patch '@SITELIB@' '$(FINDLIB_OCAML_SITELIB)' | \
 			$(SH) tools/patch '@FINDLIB_PATH@' '$(FINDLIB_PATH)' -p >findlib.conf
-	if ./tools/cmd_from_same_dir ocamlc; then \
+	if $(SH) ./tools/cmd_from_same_dir ocamlc; then \
 		echo 'ocamlc="ocamlc.opt"' >>findlib.conf; \
 	fi
-	if ./tools/cmd_from_same_dir ocamlopt; then \
+	if $(SH) ./tools/cmd_from_same_dir ocamlopt; then \
 		echo 'ocamlopt="ocamlopt.opt"' >>findlib.conf; \
 	fi
-	if ./tools/cmd_from_same_dir ocamldep; then \
+	if $(SH) ./tools/cmd_from_same_dir ocamldep; then \
 		echo 'ocamldep="ocamldep.opt"' >>findlib.conf; \
 	fi
-	if ./tools/cmd_from_same_dir ocamldoc; then \
+	if $(SH) ./tools/cmd_from_same_dir ocamldoc; then \
 		echo 'ocamldoc="ocamldoc.opt"' >>findlib.conf; \
 	fi
 
