@@ -264,9 +264,13 @@ esac
 ######################################################################
 # check for presence of /bin/sh
 
-if [ ! -f /bin/sh ]; then
-    sh="sh"
-fi
+case "$system" in
+    mingw|mingw64|win32|win64|cygwin) sh="sh" ;;
+    *)
+    if [ ! -f /bin/sh ]; then
+        sh="sh"
+    fi ;;
+esac
 
 ######################################################################
 # Find out standard library location
