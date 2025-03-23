@@ -35,5 +35,6 @@ install: [
 ]
 depends: [
   "ocaml" {>= "3.08.0"}
+  "conf-bash"
 ]
 depopts: ["graphics"]
