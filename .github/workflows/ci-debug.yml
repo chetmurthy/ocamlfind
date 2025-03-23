@@ -45,14 +45,17 @@ jobs:
       - name: Configure
         run: |
           opam exec -- bash ./configure
+        shell: bash
 
       - name: make all
         run: |
           opam exec -- make all
+        shell: bash
 
       - name: make opt
         run: |
           opam exec -- make opt
+        shell: bash
 
       - name: Install it with opam
         run: |
