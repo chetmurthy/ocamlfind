@@ -2502,10 +2502,23 @@ let print_configuration() =
 let ocamlcall pkg cmd =
   let dir = package_directory pkg in
   let path = Filename.concat dir cmd in
+  let need_exe =
+    List.mem Findlib_config.system [ "win32"; "win64"; "mingw"; "mingw64" ] in
   begin
     try Unix.access path [ Unix.X_OK ]
     with
-	Unix.Unix_error (Unix.ENOENT, _, _) ->
+	Unix.Unix_error (Unix.ENOENT, _, _) when need_exe ->
+         (try Unix.access (path^".exe") [ Unix.X_OK ]
+          with 
+            Unix.Unix_error (Unix.ENOENT, _, _) ->
+	     failwith ("Cannot find command: " ^ path)
+          | Unix.Unix_error (Unix.EACCES, _, _) ->
+	     failwith ("Cannot execute: " ^ path)
+          | other ->
+	     Unix.handle_unix_error (fun () -> raise other) ()
+         )
+
+      | Unix.Unix_error (Unix.ENOENT, _, _) ->
 	  failwith ("Cannot find command: " ^ path)
       | Unix.Unix_error (Unix.EACCES, _, _) ->
 	  failwith ("Cannot execute: " ^ path)
