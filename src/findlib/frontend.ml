@@ -354,6 +354,11 @@ type verbosity =
   | Only_show
 
 
+let is_executable path =
+  try Unix.access path [ Unix.X_OK ] ; true
+  with _ -> false
+;;
+
 let run_command ?filter verbose cmd args =
   let printable_cmd =
     cmd ^ " " ^ String.concat " " (List.map escape_if_needed args) in
@@ -388,7 +393,8 @@ let run_command ?filter verbose cmd args =
       List.mem Findlib_config.system [ "win32"; "win64"; "mingw"; "mingw64" ] in
 
     let fixed_cmd =
-      if need_exe then (
+      if is_executable cmd then cmd
+      else if need_exe then (
         if Filename.check_suffix cmd ".exe" then cmd else cmd ^ ".exe" 
       )
       else
